@@ -135,29 +135,24 @@ input::placeholder {
 }
 
 /* =========================
-   ORBIT BEES
+   ORBIT & FLYING BEES
 ========================= */
 .bee {
   position: absolute;
   width: 40px;
   height: 40px;
-  animation: fly linear infinite;
+  pointer-events: none;
+  transition: transform 0.2s ease-out;
+  z-index: 5;
 }
 
-/* Bật tốc độ và vị trí khác nhau cho từng ong */
-.bee-0 { top: 10%; left: 10%; animation-duration: 6s; }
-.bee-1 { top: 20%; right: 15%; animation-duration: 8s; }
-.bee-2 { bottom: 15%; left: 20%; animation-duration: 7s; }
-.bee-3 { bottom: 10%; right: 10%; animation-duration: 9s; }
+/* Vị trí gốc cho từng ong */
+.bee-0 { top: 10%; left: 10%; }
+.bee-1 { top: 20%; right: 15%; }
+.bee-2 { bottom: 15%; left: 20%; }
+.bee-3 { bottom: 10%; right: 10%; }
 
-@keyframes fly {
-  0% { transform: translate(0,0) rotate(0deg); }
-  25% { transform: translate(20px,-15px) rotate(10deg); }
-  50% { transform: translate(-15px,20px) rotate(-10deg); }
-  75% { transform: translate(15px,10px) rotate(5deg); }
-  100% { transform: translate(0,0) rotate(0deg); }
-}
-
+/* Animation vòng quanh login-card */
 .bee-orbit {
   position: absolute;
   width: 110px;
@@ -166,7 +161,6 @@ input::placeholder {
   pointer-events: none;
 }
 
-/* Left */
 .bee-orbit.left.top {
   left: calc(50% - 260px);
   top: calc(50% - 180px);
@@ -180,7 +174,6 @@ input::placeholder {
   animation-delay: 2.2s;
 }
 
-/* Right */
 .bee-orbit.right.top {
   left: calc(50% + 150px);
   top: calc(50% - 180px);
@@ -196,6 +189,25 @@ input::placeholder {
   animation-delay: 2.2s;
 }
 
+/* Animation orbit */
+@keyframes orbitLeft {
+  0% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-18px) rotate(6deg); }
+  100% { transform: translateY(0) rotate(-4deg); }
+}
+
+@keyframes orbitRight {
+  0% { transform: translateY(0) rotate(4deg) scaleX(-1); }
+  50% { transform: translateY(18px) rotate(-6deg) scaleX(-1); }
+  100% { transform: translateY(0) rotate(4deg) scaleX(-1); }
+}
+
+/* =========================
+   MOUSE-FOLLOW BEES
+========================= */
+.bee.mouse-follow {
+  transition: transform 0.15s ease-out;
+}
 /* =========================
    ANIMATIONS
 ========================= */
