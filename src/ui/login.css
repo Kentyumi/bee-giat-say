@@ -1,0 +1,291 @@
+/* =========================
+   PAGE
+========================= */
+.login-page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at top, #2b2b2b, #000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* =========================
+   LOGIN CARD + GLOW
+========================= */
+.login-card {
+  position: relative;
+  z-index: 10;
+  width: 340px;
+  padding: 30px;
+  border-radius: 22px;
+  background: rgba(25, 25, 25, 0.96);
+  text-align: center;
+
+  /* Base shadow */
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.75),
+    0 0 0 rgba(255, 212, 0, 0.3);
+
+  animation: glowPulse 3.5s ease-in-out infinite;
+}
+
+/* Glow layer */
+.login-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 24px;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 212, 0, 0.6),
+    rgba(255, 180, 0, 0.2),
+    rgba(255, 212, 0, 0.6)
+  );
+  filter: blur(18px);
+  opacity: 0.6;
+  z-index: -1;
+  animation: glowHalo 3.5s ease-in-out infinite;
+}
+
+/* =========================
+   TEXT
+========================= */
+.logo {
+  color: #ffd400;
+  font-size: 28px;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  color: #aaa;
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+
+/* =========================
+   ROLE SWITCH
+========================= */
+.role-switch {
+  display: flex;
+  background: #2a2a2a;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  padding: 4px;
+}
+
+.role-switch button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: #ccc;
+  padding: 10px 0;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.role-switch button.active {
+  background: #ffd400;
+  color: #000;
+  font-weight: 600;
+}
+
+/* =========================
+   INPUTS
+========================= */
+input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #3a3a3a;
+  color: #fff;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #ffd400, #ffb700);
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login-btn:hover {
+  box-shadow: 0 0 25px rgba(255, 212, 0, 0.8);
+}
+
+.login-btn:active {
+  transform: scale(0.97);
+}
+
+/* =========================
+   ORBIT BEES
+========================= */
+.bee-orbit {
+  position: absolute;
+  width: 110px;
+  z-index: 2;
+  filter: drop-shadow(0 0 18px rgba(255, 200, 0, 0.9));
+  pointer-events: none;
+}
+
+/* Left */
+.bee-orbit.left.top {
+  left: calc(50% - 260px);
+  top: calc(50% - 180px);
+  animation: orbitLeft 4.5s ease-in-out infinite;
+}
+
+.bee-orbit.left.bottom {
+  left: calc(50% - 260px);
+  top: calc(50% + 60px);
+  animation: orbitLeft 4.5s ease-in-out infinite;
+  animation-delay: 2.2s;
+}
+
+/* Right */
+.bee-orbit.right.top {
+  left: calc(50% + 150px);
+  top: calc(50% - 180px);
+  transform: scaleX(-1);
+  animation: orbitRight 4.5s ease-in-out infinite;
+}
+
+.bee-orbit.right.bottom {
+  left: calc(50% + 150px);
+  top: calc(50% + 60px);
+  transform: scaleX(-1);
+  animation: orbitRight 4.5s ease-in-out infinite;
+  animation-delay: 2.2s;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes glowPulse {
+  0% {
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.75),
+      0 0 20px rgba(255, 212, 0, 0.25);
+  }
+  50% {
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.75),
+      0 0 45px rgba(255, 212, 0, 0.6);
+  }
+  100% {
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.75),
+      0 0 20px rgba(255, 212, 0, 0.25);
+  }
+}
+
+@keyframes glowHalo {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes orbitLeft {
+  0% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-18px) rotate(6deg); }
+  100% { transform: translateY(0) rotate(-4deg); }
+}
+
+@keyframes orbitRight {
+  0% { transform: translateY(0) rotate(4deg) scaleX(-1); }
+  50% { transform: translateY(18px) rotate(-6deg) scaleX(-1); }
+  100% { transform: translateY(0) rotate(4deg) scaleX(-1); }
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 768px) {
+  .bee-orbit {
+    display: none;
+  }
+}
+
+/* =========================
+   LOADING STATE
+========================= */
+.login-card.loading {
+  animation: glowPulseLoading 1.8s ease-in-out infinite;
+}
+
+.login-btn.loading {
+  background: #2b2b2b;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* =========================
+   SPINNER (IOS STYLE)
+========================= */
+.spinner {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 0, 0, 0.15);
+  border-top: 3px solid #ffd400;
+  animation: spin 0.9s linear infinite;
+  margin: auto;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes glowPulseLoading {
+  0% {
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.75),
+      0 0 35px rgba(255, 212, 0, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.75),
+      0 0 65px rgba(255, 212, 0, 0.85);
+  }
+  100% {
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.75),
+      0 0 35px rgba(255, 212, 0, 0.4);
+  }
+}
+/* =========================
+   ERROR MESSAGE
+========================= */
+.error-text {
+  color: #ff5a5a;
+  font-size: 13px;
+  margin-bottom: 12px;
+}

@@ -1,0 +1,60 @@
+
+.order-page {
+  min-height: 100vh;
+  background: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.order-card {
+  background: white;
+  width: 360px;
+  padding: 22px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.order-card h2 {
+  margin-bottom: 6px;
+}
+
+.user-line {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 18px;
+}
+
+/* =====================
+   FIELD + LABEL
+===================== */
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 6px;
+}
+
+.field input {
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 14px;
+  background: #f4b400;
+  border: none;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
