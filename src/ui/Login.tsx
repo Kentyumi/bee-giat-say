@@ -5,6 +5,9 @@ type Role = "admin" | "user";
 
 const USERS = ["user1", "user2", "user3", "user4"];
 
+// Số lượng ong
+const NUM_BEES = 4;
+
 export default function Login({
   onLogin,
 }: {
@@ -28,11 +31,7 @@ export default function Login({
       let success = false;
 
       // ADMIN
-      if (
-        role === "admin" &&
-        u === "0901962534" &&
-        p === "Yumi170220"
-      ) {
+      if (role === "admin" && u === "0901962534" && p === "Yumi170220") {
         success = true;
         localStorage.setItem("bee_role", "admin");
         localStorage.setItem("bee_user", "Admin");
@@ -56,27 +55,36 @@ export default function Login({
     }, 1200);
   };
 
+  // Tạo mảng để render số lượng ong
+  const bees = Array.from({ length: NUM_BEES });
+
   return (
     <div className="login-page">
-//       {/* 🐝 ONG BAY – GIỮ NGUYÊN */}
-//       <img src="/bee.png" className="bee-orbit left top" />
-//       <img src="/bee.png" className="bee-orbit left bottom" />
-//       <img src="/bee.png" className="bee-orbit right top" />
-//       <img src="/bee.png" className="bee-orbit right bottom" />
-
+      {/* 4 ONG BAY */}
       {bees.map((_, i) => (
-              <img
-                key={i}
-                className={`bee bee-${i}`}
-                src={`${import.meta.env.BASE_URL}bee.png`}
-                alt="bee"
-              />
-            ))}
+        <div key={i} className={`bee bee-${i}`}>
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 64 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="32" cy="32" r="32" fill="#FFD93B" />
+            <circle cx="24" cy="24" r="4" fill="#000" />
+            <circle cx="40" cy="24" r="4" fill="#000" />
+            <path
+              d="M32 40C28 44 28 52 32 52C36 52 36 44 32 40Z"
+              fill="#000"
+            />
+          </svg>
+        </div>
+      ))}
 
       <div className={`login-card ${loading ? "loading" : ""}`}>
         <h1 className="logo">Giặt Sấy BEE</h1>
 
-        {/* 🔁 TAB ADMIN / USER – KHÔI PHỤC */}
+        {/* TAB ADMIN / USER */}
         <div className="role-switch">
           <button
             className={role === "user" ? "active" : ""}
