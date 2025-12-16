@@ -30,10 +30,19 @@ export default function Dashboard({
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [weight, setWeight] = useState(1);
-
-  // 🔥 ĐƠN GIÁ
   const [priceMode, setPriceMode] = useState<"preset" | "custom">("preset");
   const [pricePerKg, setPricePerKg] = useState<number>(PRESET_PRICE);
+
+  // 🔥 Bubble text messages
+  const messages = [
+    "Nhập đơn cẩn thận nha mấy chế !",
+    "Đừng quên kiểm tra cân nặng!",
+    "Giữ đơn gọn gàng nhé!"
+  ];
+
+  const [currentText, setCurrentText] = useState("");
+  const [msgIndex, setMsgIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
 
   useEffect(() => {
     const saved = localStorage.getItem("bee_orders");
@@ -44,11 +53,8 @@ export default function Dashboard({
     localStorage.setItem("bee_orders", JSON.stringify(orders));
   }, [orders]);
 
-  // 🔥 ĐỒNG BỘ GIÁ KHI ĐỔI MODE
   useEffect(() => {
-    if (priceMode === "preset") {
-      setPricePerKg(PRESET_PRICE);
-    }
+    if (priceMode === "preset") setPricePerKg(PRESET_PRICE);
   }, [priceMode]);
 
   const total = weight * pricePerKg;
@@ -70,8 +76,6 @@ export default function Dashboard({
     };
 
     setOrders([order, ...orders]);
-
-    // RESET FORM
     setName("");
     setPhone("");
     setAddress("");
@@ -88,8 +92,27 @@ export default function Dashboard({
     );
   };
 
-  const formatMoney = (n: number) =>
-    n.toLocaleString("vi-VN") + " đ";
+  const formatMoney = (n: number) => n.toLocaleString("vi-VN") + " đ";
+
+  // 🔥 Typewriter bubble text effect
+  useEffect(() => {
+    if (messages.length === 0) return;
+
+    if (charIndex < messages[msgIndex].length) {
+      const timer = setTimeout(() => {
+        setCurrentText((prev) => prev + messages[msgIndex][charIndex]);
+        setCharIndex(charIndex + 1);
+      }, 50);
+      return () => clearTimeout(timer);
+    } else {
+      const timer = setTimeout(() => {
+        setCurrentText("");
+        setCharIndex(0);
+        setMsgIndex((msgIndex + 1) % messages.length);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [charIndex, msgIndex]);
 
   return (
     <div className="dashboard-page">
@@ -103,7 +126,6 @@ export default function Dashboard({
       {role === "user" && (
         <div className="card">
           <h4>Nhận đơn giặt</h4>
-
           <div className="field">
             <label>Tên khách *</label>
             <input
@@ -112,7 +134,6 @@ export default function Dashboard({
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-
           <div className="field">
             <label>Số điện thoại (không bắt buộc)</label>
             <input
@@ -121,7 +142,6 @@ export default function Dashboard({
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
-
           <div className="field">
             <label>Địa chỉ (không bắt buộc)</label>
             <input
@@ -130,7 +150,6 @@ export default function Dashboard({
               onChange={(e) => setAddress(e.target.value)}
             />
           </div>
-
           <div className="field">
             <label>Số kg *</label>
             <input
@@ -141,8 +160,6 @@ export default function Dashboard({
               onChange={(e) => setWeight(+e.target.value || 1)}
             />
           </div>
-
-          {/* 🔥 ĐƠN GIÁ */}
           <div className="field">
             <label>Đơn giá / kg</label>
             <select
@@ -155,7 +172,6 @@ export default function Dashboard({
               <option value="custom">Tự nhập</option>
             </select>
           </div>
-
           {priceMode === "custom" && (
             <div className="field">
               <label>Nhập đơn giá (đ / kg)</label>
@@ -168,23 +184,18 @@ export default function Dashboard({
               />
             </div>
           )}
-
-          {/* 🔥 TỔNG TIỀN */}
           <div className="total-box">
             <div>Đơn giá: {formatMoney(pricePerKg)} / kg</div>
             <strong>Tổng tiền: {formatMoney(total)}</strong>
           </div>
-
           <button className="primary" onClick={addOrder}>
             Nhận đơn
           </button>
         </div>
       )}
 
-      {/* DANH SÁCH */}
       <div className="card">
         <h4>Danh sách đơn</h4>
-
         <table>
           <thead>
             <tr>
@@ -223,6 +234,21 @@ export default function Dashboard({
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Cô gái góc dưới bên phải với bubble text */}
+      <div className="girl-container">
+        {currentText && (
+          <div className="speech-bubble">
+            <span>{currentText}</span>
+            <div className="bubble-bottom"></div>
+          </div>
+        )}
+        <img
+          src="/bee-giat-say/girl-left.png"
+          className="girl"
+          alt="Girl"
+        />
       </div>
     </div>
   );
