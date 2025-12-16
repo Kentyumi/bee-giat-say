@@ -10,64 +10,63 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* =========================
-   GIRLS ANIMATION
-========================= */
-.girl-container {
-  position: absolute;
-  bottom: 0;
-  width: 160px;
-  z-index: 20;
+/* Center container */
+.center-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
+  gap: 20px; /* Khoảng cách giữa cô gái và login card */
+}
+
+/* Cô gái */
+.girl-container {
+  position: relative;
+  width: 160px;
+  text-align: center;
   animation: bounce 2s infinite ease-in-out;
 }
 
-.girl-container.left { left: calc(50% - 220px); }
-.girl-container.right { right: calc(50% - 220px); }
-
-.girl {
-  width: 160px;
-  filter: drop-shadow(0 0 12px rgba(255,200,0,0.6));
-  animation: hairFlow 1.5s infinite ease-in-out;
+.girl-container .girl {
+  width: 100%;
+  transform: scaleX(-1); /* Mirror ảnh nhìn về login */
 }
 
-.mirrored { transform: scaleX(-1); }
-
-/* Tay chỉ glow */
-.hand-point {
-  width: 40px;
-  height: 40px;
-  margin-top: -20px;
-  background: radial-gradient(circle, rgba(255,215,0,0.6) 0%, rgba(255,180,0,0) 70%);
-  border-radius: 50%;
-  animation: handGlow 2s infinite ease-in-out;
+/* Bubble text */
+.speech-bubble {
+  position: relative;
+  margin-bottom: 10px;
+  background: rgba(255, 212, 0, 0.95);
+  padding: 8px 12px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
 }
 
-.hand-point.left-hand { transform: translateX(30px) translateY(-40px); }
-.hand-point.right-hand { transform: translateX(-30px) translateY(-40px); }
+.speech-bubble span {
+  position: relative;
+  z-index: 2;
+}
 
+.bubble-bottom {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 4px;
+  background: #222; /* thanh đen ngắn phía dưới */
+  border-radius: 2px;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+/* Animation nhún */
 @keyframes bounce {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-18px); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
 
-@keyframes hairFlow {
-  0%,100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-2px) rotate(1deg); }
-  50% { transform: translateY(-4px) rotate(-1deg); }
-  75% { transform: translateY(-2px) rotate(1deg); }
-}
-
-@keyframes handGlow {
-  0%,100% { transform: scale(1); opacity:0.6; }
-  50% { transform: scale(1.2); opacity:1; }
-}
-
-/* =========================
-   LOGIN CARD
-========================= */
+/* Login card */
 .login-card {
   position: relative;
   z-index: 10;
@@ -80,6 +79,7 @@
   animation: glowPulse 3.5s ease-in-out infinite;
 }
 
+/* Glow layer */
 .login-card::before {
   content: "";
   position: absolute;
