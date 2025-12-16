@@ -58,11 +58,20 @@ export default function Login({
 
   return (
     <div className="login-page">
-      {/* 🐝 ONG BAY – GIỮ NGUYÊN */}
-      <img src="/bee.png" className="bee-orbit left top" />
-      <img src="/bee.png" className="bee-orbit left bottom" />
-      <img src="/bee.png" className="bee-orbit right top" />
-      <img src="/bee.png" className="bee-orbit right bottom" />
+//       {/* 🐝 ONG BAY – GIỮ NGUYÊN */}
+//       <img src="/bee.png" className="bee-orbit left top" />
+//       <img src="/bee.png" className="bee-orbit left bottom" />
+//       <img src="/bee.png" className="bee-orbit right top" />
+//       <img src="/bee.png" className="bee-orbit right bottom" />
+
+      {bees.map((_, i) => (
+              <img
+                key={i}
+                className={`bee bee-${i}`}
+                src={`${import.meta.env.BASE_URL}bee.png`}
+                alt="bee"
+              />
+            ))}
 
       <div className={`login-card ${loading ? "loading" : ""}`}>
         <h1 className="logo">Giặt Sấy BEE</h1>
