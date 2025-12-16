@@ -135,79 +135,94 @@ input::placeholder {
 }
 
 /* =========================
-   ORBIT & FLYING BEES
+   BẦY ONG & BỤI VÀNG
 ========================= */
 .bee {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   pointer-events: none;
-  transition: transform 0.2s ease-out;
+  transition: transform 0.06s ease-out;
   z-index: 5;
+  animation: bodyWobble 2s ease-in-out infinite;
 }
 
-/* Vị trí gốc cho từng ong */
-.bee-0 { top: 10%; left: 10%; }
-.bee-1 { top: 20%; right: 15%; }
-.bee-2 { bottom: 15%; left: 20%; }
-.bee-3 { bottom: 10%; right: 10%; }
-
-/* Animation vòng quanh login-card */
-.bee-orbit {
+.bee::after {
+  content: "";
   position: absolute;
-  width: 110px;
-  z-index: 2;
-  filter: drop-shadow(0 0 18px rgba(255, 200, 0, 0.9));
-  pointer-events: none;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #ffd400 0%, rgba(255,212,0,0) 70%);
+  border-radius: 50%;
+  top: 40%;
+  left: 50%;
+  animation: dust 1.2s infinite;
 }
 
-.bee-orbit.left.top {
-  left: calc(50% - 260px);
-  top: calc(50% - 180px);
-  animation: orbitLeft 4.5s ease-in-out infinite;
+@keyframes bodyWobble {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(2deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
 }
 
-.bee-orbit.left.bottom {
-  left: calc(50% - 260px);
-  top: calc(50% + 60px);
-  animation: orbitLeft 4.5s ease-in-out infinite;
-  animation-delay: 2.2s;
+.bee-svg .wing-left {
+  transform-origin: center 90%;
+  animation: flap 0.3s ease-in-out infinite alternate;
+}
+.bee-svg .wing-right {
+  transform-origin: center 90%;
+  animation: flap 0.3s ease-in-out infinite alternate-reverse;
 }
 
-.bee-orbit.right.top {
-  left: calc(50% + 150px);
-  top: calc(50% - 180px);
-  transform: scaleX(-1);
-  animation: orbitRight 4.5s ease-in-out infinite;
+@keyframes flap {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(25deg); }
+  100% { transform: rotate(0deg); }
 }
 
-.bee-orbit.right.bottom {
-  left: calc(50% + 150px);
-  top: calc(50% + 60px);
-  transform: scaleX(-1);
-  animation: orbitRight 4.5s ease-in-out infinite;
-  animation-delay: 2.2s;
+@keyframes dust {
+  0% { transform: translate(0,0) scale(1); opacity: 0.7; }
+  50% { transform: translate(-5px,-8px) scale(0.5); opacity: 0.3; }
+  100% { transform: translate(0,0) scale(1); opacity: 0.7; }
 }
 
-/* Animation orbit */
-@keyframes orbitLeft {
-  0% { transform: translateY(0) rotate(-4deg); }
-  50% { transform: translateY(-18px) rotate(6deg); }
-  100% { transform: translateY(0) rotate(-4deg); }
-}
-
-@keyframes orbitRight {
-  0% { transform: translateY(0) rotate(4deg) scaleX(-1); }
-  50% { transform: translateY(18px) rotate(-6deg) scaleX(-1); }
-  100% { transform: translateY(0) rotate(4deg) scaleX(-1); }
-}
-
-/* =========================
-   MOUSE-FOLLOW BEES
-========================= */
+/* Mouse follow */
 .bee.mouse-follow {
-  transition: transform 0.15s ease-out;
+  transition: transform 0.08s ease-out;
 }
+
+/* Bụi vàng nhỏ theo đường bay ong */
+.bee::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #ffd400 0%, rgba(255,212,0,0) 70%);
+  border-radius: 50%;
+  top: 40%;
+  left: 50%;
+  animation: dust 1.2s infinite;
+}
+
+@keyframes dust {
+  0% { transform: translate(0,0) scale(1); opacity: 0.7; }
+  50% { transform: translate(-5px,-8px) scale(0.5); opacity: 0.3; }
+  100% { transform: translate(0,0) scale(1); opacity: 0.7; }
+}
+
+/* Orbit cũ – có thể giữ hoặc ẩn trên mobile */
+.bee-orbit {
+  display: none;
+}
+
+/* Mouse follow */
+.bee.mouse-follow {
+  transition: transform 0.12s ease-out;
+}
+
+
 /* =========================
    ANIMATIONS
 ========================= */

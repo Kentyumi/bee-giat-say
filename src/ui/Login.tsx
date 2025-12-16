@@ -4,33 +4,7 @@ import "./login.css";
 type Role = "admin" | "user";
 
 const USERS = ["user1", "user2", "user3", "user4"];
-const NUM_BEES = 4;
-
-const bees = Array.from({ length: 4 });
-const [mouse, setMouse] = useState({ x: 0, y: 0 });
-
-useEffect(() => {
-  const move = (e: MouseEvent) => setMouse({ x: e.clientX, y: e.clientY });
-  window.addEventListener("mousemove", move);
-  return () => window.removeEventListener("mousemove", move);
-}, []);
-
-{bees.map((_, i) => (
-  <div
-    key={i}
-    className={`bee mouse-follow bee-${i}`}
-    style={{
-      transform: `translate(${Math.sin(mouse.x / 50 + i) * 30}px, ${Math.cos(mouse.y / 50 + i) * 30}px)`,
-    }}
-  >
-    <svg width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="32" cy="32" r="32" fill="#FFD93B" />
-      <circle cx="24" cy="24" r="4" fill="#000" />
-      <circle cx="40" cy="24" r="4" fill="#000" />
-      <path d="M32 40C28 44 28 52 32 52C36 52 36 44 32 40Z" fill="#000"/>
-    </svg>
-  </div>
-))}
+const NUM_BEES = 16;
 
 export default function Login({
   onLogin,
@@ -51,7 +25,6 @@ export default function Login({
     setTimeout(() => {
       const u = username.trim();
       const p = password.trim();
-
       let success = false;
 
       if (role === "admin" && u === "0901962534" && p === "Yumi170220") {
@@ -71,49 +44,64 @@ export default function Login({
       }
 
       setLoading(false);
-      if (!success) setError("Nhập lại cho đúng đi chế ơi! không phải nhân viên BEE thì đừng vào nha!!");
+      if (!success) setError("Sai tài khoản hoặc mật khẩu");
     }, 1200);
   };
 
-  const bees = Array.from({ length: NUM_BEES });
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
-
-  // Theo dõi chuột
   useEffect(() => {
-    const move = (e: MouseEvent) => {
-      setMouse({ x: e.clientX, y: e.clientY });
-    };
+    const move = (e: MouseEvent) => setMouse({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
   }, []);
 
+  const bees = Array.from({ length: NUM_BEES });
+
+  // Leader path offset
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+
   return (
     <div className="login-page">
-      {/* 4 ONG BAY */}
-      {bees.map((_, i) => (
-        <div
-          key={i}
-          className={`bee bee-${i}`}
-          style={{
-            transform: `translate(${Math.sin(mouse.x / 50 + i) * 30}px, ${
-              Math.cos(mouse.y / 50 + i) * 30
-            }px)`,
-          }}
-        >
-          <svg
-            width="40"
-            height="40"
-            viewBox="0 0 64 64"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+      {bees.map((_, i) => {
+        const angle = (i / NUM_BEES) * Math.PI * 2 + Date.now() / 2000;
+        const radius = 100 + 10 * i; // khoảng cách ra xa dần
+        const x = centerX + Math.cos(angle + i) * radius + Math.sin(mouse.x / 80 + i) * 20;
+        const y = centerY + Math.sin(angle + i) * radius + Math.cos(mouse.y / 80 + i) * 20;
+
+        const distance = Math.hypot(mouse.x - x, mouse.y - y);
+        const flapScale = distance < 120 ? 1.5 : 1;
+
+        return (
+          <div
+            key={i}
+            className={`bee mouse-follow bee-${i}`}
+            style={{
+              transform: `translate(${x}px, ${y}px)`,
+            }}
           >
-            <circle cx="32" cy="32" r="32" fill="#FFD93B" />
-            <circle cx="24" cy="24" r="4" fill="#000" />
-            <circle cx="40" cy="24" r="4" fill="#000" />
-            <path d="M32 40C28 44 28 52 32 52C36 52 36 44 32 40Z" fill="#000" />
-          </svg>
-        </div>
-      ))}
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 64 64"
+              xmlns="http://www.w3.org/2000/svg"
+              className="bee-svg"
+              style={{ transform: `scale(${flapScale})` }}
+            >
+              <ellipse cx="32" cy="36" rx="10" ry="16" fill="#FFD93B" stroke="#000" strokeWidth="1"/>
+              <rect x="22" y="28" width="20" height="4" fill="#000"/>
+              <rect x="22" y="36" width="20" height="4" fill="#000"/>
+              <rect x="22" y="44" width="20" height="4" fill="#000"/>
+              <ellipse cx="24" cy="20" rx="5" ry="10" fill="rgba(255,255,255,0.6)" className="wing-left"/>
+              <ellipse cx="40" cy="20" rx="5" ry="10" fill="rgba(255,255,255,0.6)" className="wing-right"/>
+              <circle cx="28" cy="32" r="1.5" fill="#000"/>
+              <circle cx="36" cy="32" r="1.5" fill="#000"/>
+              <line x1="22" y1="48" x2="18" y2="54" stroke="#000" strokeWidth="1.2"/>
+              <line x1="42" y1="48" x2="46" y2="54" stroke="#000" strokeWidth="1.2"/>
+            </svg>
+          </div>
+        );
+      })}
 
       <div className={`login-card ${loading ? "loading" : ""}`}>
         <h1 className="logo">Giặt Sấy BEE</h1>
